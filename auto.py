@@ -9,16 +9,16 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 #Sources
-source_dir = "/Users/melim/Downloads"
-video_dir = "/Users/melim/Videos"
-image_dir = "/Users/melim/Pictures"
-document_dir = "/Users/melim/Documents"
-music_dir = "/Users/melim/Music"
+source_dir = "C:\\Users\\melim\\Downloads"
+video_dir = "C:\\Users\\melim\\Videos"
+image_dir = "C:\\Users\\melim\\Pictures"
+document_dir = "C:\\Users\\melim\\Documents"
+music_dir = "C:\\Users\\melim\\Music"
 
-#Using this library, print the name
-with os.scandir(source_dir) as entries:
-    for entry in entries: 
-        print(entry.name)
+#Prints the name of all the downloads folder
+# with os.scandir(source_dir) as entries:
+#     for entry in entries: 
+#         print(entry.name)
 
 #Moving Action Class
 class MoveHandler(FileSystemEventHandler):
@@ -29,18 +29,22 @@ class MoveHandler(FileSystemEventHandler):
                 name = entry.name 
                 source = source_dir 
                 #Conditionals
-                if name.endswith('.mp4') or name.endswith('.avi'):
+                if name.endswith('.mp4') or name.endswith('.avi') or name.endswith('.wmv') or name.endswith('.mov'):
                     source = video_dir
                     move_action(source, entry, name)
+                    print(f". . . [ {name} moved into video directory ] . . .")
                 elif name.endswith('.jpeg') or name.endswith('png') or name.endswith('.jpg'):
                     source = image_dir
                     move_action(source, entry, name)
+                    print(f". . . [ {name} moved into image directory ] . . .")
                 elif name.endswith('.pdf'):
                     source = document_dir
                     move_action(source, entry, name)
+                    print(f". . . [ {name} moved into documents directory ] . . .")
                 elif name.endswith('.wav') or name.endswith('.mp3'):
                     source = music_dir
                     move_action(source, entry, name)
+                    print(f". . . [ {name} moved into music directory ] . . .")
 
 #makes a unique name if already exists
 def make_name(destination, name):
@@ -79,5 +83,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-
-    
